@@ -1,1 +1,37 @@
 {% extends 'base.html'%}
+
+    {%block content %}
+    <div class="col-12  mt-2">
+        <div class="row">
+            <div class="px-4 py-5">
+                <h2 class="pb-2 border-bottom">Cursos em destaque</h2>
+                <div class="row g-4 py-5 row=cols-1 row-cols-lg-3">
+                    <div class="feature col">
+                        <div class="mb-3">
+                            <img src="{{url_for('static',filename='imagens/logica.png') }}" height= "100" widht="100">
+                        </div>
+                        <h3 class="fs-2">Lógica de programação</h3>
+                        <p>Lógica de programação refere-se á capacitação de pensar e resolver problemas </p>
+                        <a href="a"class="icon link">Saiba mais</a>
+                        </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <img src"{{url_for('static', filename='imagens/db.png') }}" height= "100" widht="100">
+                        </div> 
+                        <h3 class="fs-2">Lógica de programação </h3>
+                        <p>Um banco de dados é um sistema organizado e estruturado para armazenar e gerenciar </p>
+                        <a href="a"class="icon link">Saiba mais </a>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <img src"{{url_for('static', filename='imagens/ux.png') }}" height= "100" widht="100">
+                        </div> 
+                        <h3 class="fs-5">UX/UI</h3>
+                        <p>UX (User experience) e UI (User Interface) são termos comumente usado no deign </p>
+                        <a href="#" class"icon-link">saiba mais </a>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>  
+    {% endblock %}
