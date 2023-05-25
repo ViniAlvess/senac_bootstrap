@@ -1,12 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends  'base.html' %}
+
+{% block banner %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <h1 class="mt-4 ps-2 fs-2">Formulario de login </h1>
+</div>
+
+<div class="row mt-3">
+    <div class="col">
+        <form method="POST" action="" class="border p-5">
+            {{ form_login.csrf_token}}
+            <legend>Login</legend>
+            <fieldset>
+                <div class="form-group mb-2">
+                    {{ form_login.email.label (class="form-control-label") }}
+                    {{% if form_login.email.errors % }}
+                    {{ form_login.email (class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form_login.email.errors %}
+                          {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                     {{form_login.email(class="form-control") }}
+                     {% endif %}
+
+                </div>
+                <div class="form=group mb-2">
+                    {{ form_login.senha.label (class="form-control-label") }}
+                    {{ form_login.senha (class="form-control") }}
+                </div>
+            </fieldset>
+            {{ form_login.submitLogin (class="btn btn-primary mt-2") }}
+        </form>
+    </div>
+    <div class="col">
+        <form method="POST" action="" class="border p-5">
+            {{ form_novo_usuario.csrf_token}}
+            <legend>Novo Usuario</legend>
+            <fieldset>
+                <div class="form-group mb-2">
+                    {{ form_novo_usuario.email.label (class="form-control-label") }}
+                    {{ form_novo_usuario.email (class="form-control") }}
+                </div>
+                <div class="form=group mb-2">
+                    {{ form_novo_usuario.nome.label (class="form-control-label") }}
+                    {{ form_novo_usuario.nome (class="form-control") }}
+                </div>
+                <div class="form=group mb-2">
+                    {{ form_novo_usuario.celular.label (class="form-control-label") }}
+                    {{ form_novo_usuario.celular (class="form-control") }}
+                </div>
+                <div class="form=group mb-2">
+                    {{ form_novo_usuario.cpf.label (class="form-control-label") }}
+                    {{ form_novo_usuario.cpf (class="form-control") }}
+                </div>
+                <div class="form=group mb-2">
+                    {{ form_novo_usuario.senha.label (class="form-control-label") }}
+                    {{ form_novo_usuario.senha (class="form-control") }}
+                </div>
+                <div class="form=group mb-2">
+                    {{ form_novo_usuario.senhaConfirmacao.label (class="form-control-label") }}
+                    {{ form_novo_usuario.senhaConfirmacao (class="form-control") }}
+                </div>
+            </fieldset>
+            {{ form_login.submitLogin (class="btn btn-primary mt-2") }}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
