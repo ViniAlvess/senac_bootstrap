@@ -1,5 +1,5 @@
 import mysql.connector  
-from flask import Flask, render_template,request, url_for, flash, redirect 
+from flask import Flask, render_template,request, url_for, flash, redirect , session
 from forms import formLogin , formNovoUsuario
 from hashlib import sha256
 
@@ -35,6 +35,21 @@ def login():
     form_novo_usuario = formNovoUsuario()
     
     if form_login.validate_on_submit() and 'submitLogin' in request.form:
+        
+        cursor = mydb.cursor()
+        
+        email = form_login.email.data
+        senha = form_login.senha.data
+        hashSenha = sha256 (senha.encode())
+        
+        comando = f'Select * from alunos where email = "{email}"'
+        cursor.execute(comando)
+        result = cursor.fetchall()
+        
+        if hashSenha.hexdigest() == result[0][5]:
+            session['nome_usuario'] = result [0][1]
+            
+        
         flash(f'Login realizado com sucesso: {form_login.email.data}', 'alert-success')
         return redirect(url_for('index'))
     
