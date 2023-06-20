@@ -1,11 +1,16 @@
 import mysql.connector  
-from flask import Flask, render_template,request, url_for, flash, redirect , session
-from forms import formLogin , formNovoUsuario
+from flask import Flask, render_template,request, url_for, flash, redirect , session , send_from_directory
+from forms import formLogin , formNovoUsuario, formCadastroProduto
 from hashlib import sha256
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 
 app = Flask(__name__)
 
 app.config ['SECRET_KEY'] = '65ad3ecb328fe2f1b810b1031f31d119'
+app.config ['UPLOADES_PHOTOS_DEST'] = 'uploads'
+
+upload = UploadSet('photos', IMAGES)
+configure_uploads(app, upload)
 
 mydb = mysql.connector.connect(
     host = 'localhost',
@@ -49,10 +54,11 @@ def login():
         if hashSenha.hexdigest() == result[0][5]:
             session['nome_usuario'] = result [0][1]
             
-        
-        flash(f'Login realizado com sucesso: {form_login.email.data}', 'alert-success')
-        return redirect(url_for('index'))
-    
+            flash(f'Login realizado com sucesso: {form_login.email.data}', 'alert-success')
+            return redirect(url_for('index'))
+        else : 
+            flash(f'Usuario ou senha incorreta para : {form_login.email.data}', 'alert-danger')
+            return redirect(url_for('login'))
     if form_novo_usuario.validate_on_submit() and 'submitCadastro' in request.form:
     
         cursor = mydb.cursor()
@@ -82,6 +88,20 @@ def ead():
 @app.route('/contato')
 def contato(): 
     return render_template('contato.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+@app.route('/uploads/<filename')
+def get_file(filename):
+    return send_from_directory(app.config['UPLOADED_PHOTOS_DEST'], filename )
+
+@app.route('/cadastro_curso', methods=['GET','POST'])
+def cadastrocurso():
+    if session.get("nome_usuario"):
+        titulo = 'Cdastro de curso'
 
 if __name__ =='__main__':
     app.run(debug=True)
